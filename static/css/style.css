@@ -6,6 +6,6 @@ body {
   display: none;
 }
 
-#formpaste .btn-default {
+.btn-bottom-margin {
   margin-bottom:5px !important;
 }

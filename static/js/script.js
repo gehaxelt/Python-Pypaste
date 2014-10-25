@@ -1,9 +1,14 @@
 $(document).ready(function() {
   var btnreset = $("#btnreset");
   var btnsend = $("#btnsend");
+  var btnnew = $("#btnnew");
   var txtcode = $("#txtcode");
   var statusmessagediv = $("#statusmessage");
   var statusdiv = $("#status");
+  var showpastediv = $("#showpaste");
+  var codepaste = $("#codepaste");
+  var newpastediv = $("#newpaste");
+
 
   btnreset.on('click', function() {
     txtcode.val("");
@@ -78,6 +83,9 @@ $(document).ready(function() {
   //Do we need to decrypt a paste?
   if(location.hash.slice(1) !== "")
   {
+    newpastediv.hide();
+    codepaste.text('Loading...');
+    showpastediv.fadeIn("fast");
     //Get the data from the location-hash string
     var data = location.hash.slice(1);
     try {
@@ -116,7 +124,7 @@ $(document).ready(function() {
           return ;
         }
 
-        console.log(decrypted);
+        codepaste.text(decrypted);
     })
       .fail(function(msg) {
         showStatus('Failed to retrieve the paste from the server :(','danger');
