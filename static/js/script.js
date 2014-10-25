@@ -2,9 +2,13 @@ $(document).ready(function() {
   var btnreset = $("#btnreset");
   var btnsend = $("#btnsend");
   var txtcode = $("#txtcode");
+  var statusmessagediv = $("#statusmessage");
+  var statusdiv = $("#status");
 
   btnreset.on('click', function() {
     txtcode.val("");
+    btnsend.prop( "disabled", false );
+    statusdiv.css("display","none");
   });
 
   btnsend.on('click', function() {
@@ -27,6 +31,7 @@ $(document).ready(function() {
       return ;
     }
 
+    btnsend.prop( "disabled", true );
     //Send data to server
     $.ajax({
       type: "POST",
@@ -42,11 +47,27 @@ $(document).ready(function() {
           return ;
         }
 
-        showStatus('Paste saved! ID is + ' + msg.hash, 'success');
-        //TODO: Build URL with key + iv
-        key = forge.util.encode64(key);
-        iv = forge.util.encode64(iv);
+        if(typeof msg.hash === undefined ) {
+          showStatus('Failed to get paste hash', 'danger');
+          return ;
+        }
 
+        var protocol = location.protocol
+        var host = location.host
+        var path = location.pathname
+
+        var b64data = forge.util.encode64(key + "||" + iv + "||" + msg.hash)
+        var url = protocol + host + path + "#" + b64data
+
+
+        statusmessagediv.html("Paste saved! <input class='form-control' type='text' id='pasteurl' value='"+url+"'>");
+        statusmessagediv.addClass("alert-success");
+        statusdiv.fadeIn().css("display","block").delay(10000).fadeOut("fast", function() {
+          statusmessagediv.toggleClass("alert-"+type);
+        });
+
+        $("#pasteurl").select();
+        btnsend.prop( "disabled", false );
     })
       .fail(function( msg ) {
         showStatus('Unable to save the paste :(', 'danger');
