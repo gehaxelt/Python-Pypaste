@@ -6,6 +6,7 @@ An encrypted pastebin written in python using flask.
 #Features
 
 - Encrypts all pasted data with AES-256-CBC on the clientside, so the service provider can't snoop into your pastes
+- Pastes are stored on the harddisk, so no database is needed
 - Keys are stored in location.hash, thus not transmitted to the server
 - "Burn after reading":  Deletes a paste after the first visit
 - Automatic expiration: User can choose how long the paste is valid
@@ -13,6 +14,8 @@ An encrypted pastebin written in python using flask.
 - Awesome Bootstrap design ;)
 - Size-limit: Provider can limit a paste's size
 - Expiration-limit: Provider can limit the expiration limit
+- W3C compliant
+- Built-in webserver
 
 #Requirements
 
@@ -31,6 +34,7 @@ An encrypted pastebin written in python using flask.
 
 - Copy ```config.py.example``` to ```config.py``` and edit the parameters in the constructor.
 - Create a writeable directory ```data/```
+
 
 #License
 
