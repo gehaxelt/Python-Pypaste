@@ -1,19 +1,24 @@
 #!/usr/bin/python
 
 class PyPasteConfig:
-    
+    """Configuration class for PyPaste"""
+
     # Configure all necessasry parameters
-    def __init__():
+    def __init__(self):
         self.__port = 5000                        #Port
         self.__host = "127.0.0.1"                 #Host
         self.__baseURL = "http://{HOST}:{PORT}/"  #URL for paste links. {HOST} and {PORT} will be replaced
+        self.__debug = False                      #Enable debug mode. Do *not* enable it in production environments
 
     # Getters
-    def getPort():
+    def getPort(self):
         return self.__port
 
-    def getHost():
+    def getHost(self):
         return self.__host
 
-    def getBaseURL():
+    def getBaseURL(self):
         return self.__baseURL
+
+    def getDebug(self):
+        return self.__debug
