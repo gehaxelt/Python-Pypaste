@@ -24,6 +24,7 @@ def createPaste():
     
     data = request.form['data']
     burn = request.form['burn']
+    expiration = int(request.form['expiration'])
 
     # Check if it's hex-only
     if not hex_regex.match(data):
@@ -31,6 +32,9 @@ def createPaste():
 
     if not (burn == "true" or burn == "false"):
       return jsonify({'error': 'Invalid value for burn'}), 200
+
+    if (expiration <= 0) or (expiration > config.getMaxLifeTime()):
+      return jsonify({'error': 'Bad expiration value chosen.'}), 200
 
     # Check max-length
     if len(data) >= config.getMaxPasteSize():
@@ -47,6 +51,7 @@ def createPaste():
     pastefile = open(pastepath,"w")
     pastefile.write(str(timestamp) + "\n")
     pastefile.write(str(burn) + "\n")
+    pastefile.write(str(expiration*60) + "\n")
     pastefile.write(data + "\n")
     pastefile.close()
 
@@ -69,11 +74,12 @@ def retrievePaste():
     if not os.path.exists(pastepath):
         return jsonify({'error':'Paste does not exist anymore'}), 200
 
-    timestamp = time.time()
+    timestamp = int(float(time.time()))
     pastefile = open(pastepath,"r")
-    pastetime = pastefile.readline().strip()
-    pasteburn = pastefile.readline().strip()
-    pastedata = pastefile.readline().strip()
+    pastetime = int(float(pastefile.readline().strip())) #Timestamp
+    pasteburn = pastefile.readline().strip() #Burn after reading
+    pasteexp = int(pastefile.readline().strip()) #Expiration
+    pastedata = pastefile.readline().strip() #Encrypted data
     pastefile.close()
 
     if pasteburn == "true":
@@ -81,7 +87,8 @@ def retrievePaste():
     else:
       pasteburn = False
 
-    if int(float(timestamp)) >= (config.getMaxLifeTime() + int(float(pastetime))):
+    if (timestamp >= (config.getMaxLifeTime() + pastetime)) or \
+      (timestamp >= (pasteexp + pastetime)):
         os.remove(pastepath)
         return jsonify({'error':'Paste does not exist anymore'}), 200
 
