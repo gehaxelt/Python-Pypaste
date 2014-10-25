@@ -5,9 +5,20 @@ An encrypted pastebin written in python using flask.
 
 #Features
 
+- Encrypts all pasted data with AES-256-CBC on the clientside, so the service provider can't snoop into your pastes
+- Keys are stored in location.hash, thus not transmitted to the server
+- "Burn after reading":  Deletes a paste after the first visit
+- Automatic expiration: User can choose how long the paste is valid
+- Syntaxhighlighting: Highlightjs does the job
+- Awesome Bootstrap design ;)
+- Size-limit: Provider can limit a paste's size
+- Expiration-limit: Provider can limit the expiration limit
+
 #Requirements
 
-- Written in python 3.4.2
+- python 3.4.2
+- Flask
+- git
 
 #Setup
 
