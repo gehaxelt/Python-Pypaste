@@ -2,6 +2,7 @@ $(document).ready(function() {
   var btnreset = $("#btnreset");
   var btnsend = $("#btnsend");
   var btnnew = $("#btnnew");
+  var btnsyntax = $("#btnsyntaxhighlight");
   var txtcode = $("#txtcode");
   var statusmessagediv = $("#statusmessage");
   var statusdiv = $("#status");
@@ -19,6 +20,12 @@ $(document).ready(function() {
   btnnew.on('click', function() {
     showpastediv.hide();
     newpastediv.show();
+  });
+
+  btnsyntax.on('click', function() {
+    $('#codepaste').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
   });
 
   btnsend.on('click', function() {
