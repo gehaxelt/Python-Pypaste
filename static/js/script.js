@@ -63,7 +63,7 @@ $(document).ready(function() {
         statusmessagediv.html("Paste saved! <input class='form-control' type='text' id='pasteurl' value='"+url+"'>");
         statusmessagediv.addClass("alert-success");
         statusdiv.fadeIn().css("display","block").delay(10000).fadeOut("fast", function() {
-          statusmessagediv.toggleClass("alert-"+type);
+          statusmessagediv.toggleClass("alert-success");
         });
 
         $("#pasteurl").select();
@@ -74,6 +74,55 @@ $(document).ready(function() {
         return ;
     });
   });
+
+  //Do we need to decrypt a paste?
+  if(location.hash.slice(1) !== "")
+  {
+    //Get the data from the location-hash string
+    var data = location.hash.slice(1);
+    try {
+      var decoded = forge.util.decode64(data);
+      decoded = decoded.split("||");
+      var key = decoded[0] || null
+      var iv = decoded[1] || null
+      var hash = decoded[2] || null
+    } catch(e) {
+      showStatus('Failed to decrypt the paste','danger');
+      return ;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "/api/retrievepaste",
+      data: { 
+        hash: hash
+      }
+    })
+      .done(function(msg) {
+        if(msg.error != null) {
+          showStatus(msg.error, 'danger');
+          return ;
+        }
+
+        if(typeof msg.data === undefined ) {
+          showStatus('Failed to retrieve the paste from the server :(', 'danger');
+          return ;
+        }
+
+        decrypted = AESDecrypt(msg.data, key, iv);
+
+        if(decrypted == null) {
+          showStatus('An error occurred during the decryption process', 'danger');
+          return ;
+        }
+
+        console.log(decrypted);
+    })
+      .fail(function(msg) {
+        showStatus('Failed to retrieve the paste from the server :(','danger');
+        return;
+    })
+  }
 
 });
 
@@ -116,7 +165,7 @@ function AESDecrypt(encrypted, key, iv) {
 /**
   * Displays a message in the #statusmessage div and fadesIn/fadesOut the #status div.
   * @param: text - Text to display
-  * @param: type - Boostrap css alert-[type] style
+  * @param: type - Boostrap css alert-[type] style. Do not pass user-input here. Other XSS may be possible!
   * @param: duration - How long the message is displayed
 **/
 function showStatus(text,type) {
