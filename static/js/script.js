@@ -69,6 +69,7 @@ $(document).ready(function() {
           return ;
         }
 
+        //Build URL with paste information in the hashtag
         var protocol = location.protocol
         var host = location.host
         var path = location.pathname
@@ -76,7 +77,7 @@ $(document).ready(function() {
         var b64data = forge.util.encode64(key + "||" + iv + "||" + msg.hash)
         var url = protocol + host + path + "#" + b64data
 
-
+        //Display the link for 10 seconds
         statusmessagediv.html("Paste saved! <input class='form-control' type='text' id='pasteurl' value='"+url+"'>");
         statusmessagediv.addClass("alert-success");
         statusdiv.fadeIn().css("display","block").delay(10000).fadeOut("fast", function() {
@@ -98,6 +99,7 @@ $(document).ready(function() {
     newpastediv.hide();
     codepaste.text('Loading...');
     showpastediv.fadeIn("fast");
+
     //Get the data from the location-hash string
     var data = location.hash.slice(1);
     try {
@@ -111,6 +113,7 @@ $(document).ready(function() {
       return ;
     }
 
+    //Retrieve the encrypted paste data from the server
     $.ajax({
       type: "POST",
       url: "/api/retrievepaste",
