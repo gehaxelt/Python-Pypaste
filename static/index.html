@@ -43,7 +43,17 @@
             <div class="row">
               <button type="button" class="btn btn-default btn-bottom-margin" id="btnsend">Send</button>
               <div class="btn btn-default btn-bottom-margin">
-                <input type="checkbox" id="chkbburn"> <label style="display:inline;font-weight:100" for="chkbburn">Burn after reading</label>
+                <input type="checkbox" id="chkbburn"> <label class="lightlabel" for="chkbburn">Burn after reading</label>
+              </div>
+              <div class="btn btn-default btn-bottom-margin">
+                <label class="lightlabel" for="selexpiration">Expire</label>
+                <select id="selexpiration">
+                  <option value="5">5 minutes</option>
+                  <option value="10">10 minutes</option>
+                  <option value="60">1 hour</option>
+                  <option value="720">12 hours</option>
+                  <option value="1440">1 day</option>
+                </select>
               </div>
               <button type="button" class="btn btn-default btn-bottom-margin" id="btnreset">Reset</button>
             </div>
