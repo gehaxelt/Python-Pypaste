@@ -27,10 +27,36 @@
         </ul>
       </div><!-- /.container-fluid -->
     </nav>
-
+    <div class="container">
+     <noscript>
+        <div class="alert alert-danger" role="alert">
+          You need to have Javascript enabled to use this pastebin properly.
+        </div>
+      </noscript>
+      <div class="row" id="status">
+        <div class="alert" role="alert" id="statusmessage"></div>
+      </div>
+      <div class="row" id="content">
+        <div id="newpaste">
+          <form action="#" class="form-horizontal" role="form" id="formpaste">
+            <div class="row">
+              <button type="button" class="btn btn-default" id="btnsend">Send</button>
+              <button type="button" class="btn btn-default" id="btnreset">Reset</button>
+            </div>
+            <div class="row">
+              <textarea class="form-control" rows="10" id="txtcode" placeholder="Your code here!"></textarea>
+            </div>
+          </form>
+        </div>
+        <div id="showpaste">
+          <pre><code id="codepaste"></code></pre>
+        </div>
+      </div>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="static/js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/script.js"></script>
   </body>
 </html>
