@@ -81,7 +81,7 @@ $(document).ready(function() {
         var path = location.pathname
 
         var b64data = forge.util.encode64(key + "||" + iv + "||" + msg.hash)
-        var url = protocol + host + path + "#" + b64data
+        var url = protocol + "//" + host + path + "#" + b64data
 
         //Display the link for 10 seconds
         statusmessagediv.html("Paste saved! <input class='form-control' type='text' id='pasteurl' value='"+url+"'>");
