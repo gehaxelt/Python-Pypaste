@@ -19,6 +19,7 @@ An encrypted pastebin written in python using flask.
 #Configuration
 
 - Copy ```config.py.example``` to ```config.py``` and edit the parameters in the constructor.
+- Create a writeable directory ```data/```
 
 #License
 
