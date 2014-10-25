@@ -36,11 +36,10 @@ $(document).ready(function() {
       }
     })
       .done(function( msg ) {
-        try {
-          var data = JSON.parse(msg);
-        } catch(e) {
-          showStatus('Unable to parse response :(', 'danger');
-          return;
+
+        if(msg.error != null) {
+          showStatus(msg.error, 'danger');
+          return ;
         }
 
         showStatus('Paste saved! ID is + ' + msg.hash, 'success');
@@ -105,5 +104,7 @@ function showStatus(text,type) {
   var statusdiv = $("#status");
   statusmessagediv.text(text);
   statusmessagediv.addClass("alert-"+type);
-  statusdiv.fadeIn().css("display","block").delay(duration).fadeOut();
+  statusdiv.fadeIn().css("display","block").delay(duration).fadeOut("fast", function() {
+    statusmessagediv.toggleClass("alert-"+type);
+  });
 }
