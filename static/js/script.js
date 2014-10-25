@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   btnsend.on('click', function() {
     var plaintext = txtcode.val();
-    var burnafterreading = checkburn.val();
+    var burnafterreading = checkburn.is(':checked');
     if(plaintext == "") {
       showStatus('No code to paste :(','danger');
       return ;
