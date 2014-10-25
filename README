@@ -1,0 +1,25 @@
+PyPaste
+===============
+
+An encrypted pastebin written in python using flask.
+
+#Features
+
+#Requirements
+
+- Written in python 3.4.2
+
+#Setup
+
+- Install virtualenv: ```sudo pip install virtualenv``` 
+- Run ```virtualenv env```
+- Run ```. venv/bin/activate```
+- Install Flask: ```pip install Flask```
+
+#Configuration
+
+- Copy ```config.py.example``` to ```config.py``` and edit the parameters in the constructor.
+
+#License
+
+This project is released under the  ****TBA**** License.

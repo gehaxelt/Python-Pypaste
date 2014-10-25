@@ -1,0 +1,19 @@
+#!/usr/bin/python
+
+class PyPasteConfig:
+    
+    # Configure all necessasry parameters
+    def __init__():
+        self.__port = 5000                        #Port
+        self.__host = "127.0.0.1"                 #Host
+        self.__baseURL = "http://{HOST}:{PORT}/"  #URL for paste links. {HOST} and {PORT} will be replaced
+
+    # Getters
+    def getPort():
+        return self.__port
+
+    def getHost():
+        return self.__host
+
+    def getBaseURL():
+        return self.__baseURL
