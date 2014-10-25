@@ -2,7 +2,7 @@
 
 from flask import Flask, request, jsonify
 from config import PyPasteConfig
-import re
+import re, time, hashlib, os.path
 
 
 config = PyPasteConfig()
@@ -32,7 +32,20 @@ def create_paste():
     if len(data) >= config.getMaxPasteSize():
         return jsonify({'error':'Too big'}), 200
 
-    return data, 200
+    #Get the current timestamp
+    timestamp = time.time()
+    pastehash = hashlib.sha256(str(str(timestamp) + data + request.remote_addr).encode('utf-8')).hexdigest()
+    pastepath = os.path.join('data',pastehash + '.data')
+
+    if os.path.exists(pastepath):
+      return jsonify({'error':'Hash collision. Please try again'})
+
+    pastefile = open(pastepath,"w")
+    pastefile.write(str(timestamp) + "\n")
+    pastefile.write(data + "\n")
+    pastefile.close()
+
+    return jsonify({'error': None, 'hash': pastehash}), 200
 
 
 if __name__ == '__main__':
