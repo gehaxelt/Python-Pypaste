@@ -16,6 +16,11 @@ $(document).ready(function() {
     statusdiv.css("display","none");
   });
 
+  btnnew.on('click', function() {
+    showpastediv.hide();
+    newpastediv.show();
+  });
+
   btnsend.on('click', function() {
     var plaintext = txtcode.val();
 
@@ -177,7 +182,7 @@ function AESDecrypt(encrypted, key, iv) {
   * @param: duration - How long the message is displayed
 **/
 function showStatus(text,type) {
-  var duration = duration || 2500;
+  var duration = duration || 5000;
   var statusmessagediv = $("#statusmessage");
   var statusdiv = $("#status");
   statusmessagediv.text(text);
