@@ -23,10 +23,14 @@ def createPaste():
         return 'Not allowed', 403
     
     data = request.form['data']
+    burn = request.form['burn']
 
     # Check if it's hex-only
     if not hex_regex.match(data):
         return jsonify({'error': 'Invalid hex format'}), 200
+
+    if not (burn == "true" or burn == "false"):
+      return jsonify({'error': 'Invalid value for burn'}), 200
 
     # Check max-length
     if len(data) >= config.getMaxPasteSize():
@@ -34,7 +38,7 @@ def createPaste():
 
     #Get the current timestamp
     timestamp = time.time()
-    pastehash = hashlib.md5(str(str(timestamp) + data + request.remote_addr).encode('utf-8')).hexdigest()
+    pastehash = hashlib.md5(str(str(timestamp) + data + burn + request.remote_addr).encode('utf-8')).hexdigest()
     pastepath = os.path.join('data',pastehash + '.data')
 
     if os.path.exists(pastepath):
@@ -42,6 +46,7 @@ def createPaste():
 
     pastefile = open(pastepath,"w")
     pastefile.write(str(timestamp) + "\n")
+    pastefile.write(str(burn) + "\n")
     pastefile.write(data + "\n")
     pastefile.close()
 
@@ -67,12 +72,21 @@ def retrievePaste():
     timestamp = time.time()
     pastefile = open(pastepath,"r")
     pastetime = pastefile.readline().strip()
+    pasteburn = pastefile.readline().strip()
     pastedata = pastefile.readline().strip()
     pastefile.close()
+
+    if pasteburn == "true":
+      pasteburn = True
+    else:
+      pasteburn = False
 
     if int(float(timestamp)) >= (config.getMaxLifeTime() + int(float(pastetime))):
         os.remove(pastepath)
         return jsonify({'error':'Paste does not exist anymore'}), 200
+
+    if pasteburn:
+        os.remove(pastepath)
 
     return jsonify({'error':None,'data':pastedata}), 200
 
