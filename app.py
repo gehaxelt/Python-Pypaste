@@ -34,7 +34,7 @@ def create_paste():
 
     #Get the current timestamp
     timestamp = time.time()
-    pastehash = hashlib.sha256(str(str(timestamp) + data + request.remote_addr).encode('utf-8')).hexdigest()
+    pastehash = hashlib.md5(str(str(timestamp) + data + request.remote_addr).encode('utf-8')).hexdigest()
     pastepath = os.path.join('data',pastehash + '.data')
 
     if os.path.exists(pastepath):
