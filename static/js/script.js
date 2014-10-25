@@ -10,6 +10,7 @@ $(document).ready(function() {
   var codepaste = $("#codepaste");
   var newpastediv = $("#newpaste");
   var checkburn = $("#chkbburn");
+  var selexpiration = $("#selexpiration")
 
 
   btnreset.on('click', function() {
@@ -32,6 +33,8 @@ $(document).ready(function() {
   btnsend.on('click', function() {
     var plaintext = txtcode.val();
     var burnafterreading = checkburn.is(':checked');
+    var expiration = selexpiration.val();
+
     if(plaintext == "") {
       showStatus('No code to paste :(','danger');
       return ;
@@ -56,7 +59,8 @@ $(document).ready(function() {
       url: "/api/createpaste",
       data: { 
         data: encrypted,
-        burn: burnafterreading
+        burn: burnafterreading,
+        expiration: expiration
       }
     })
       .done(function( msg ) {
