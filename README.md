@@ -36,6 +36,17 @@ An encrypted pastebin written in python using flask.
 - Copy ```config.py.example``` to ```config.py``` and edit the parameters in the constructor.
 - Create a writeable directory ```data/```
 
+#Run
+
+- To start the pastebin, run ```python app.py```.
+
+#Contribution
+
+If you discover any bugs or you have any awesome ideas, feel free to fork this repository. Pure awesomeness, if you decide to share your changes with me. The best way is to create a new feature branch:
+
+- ```git checkout -b feature_foo``` and implement your new feature
+
+Then send me a pull request pointing to your feature-branch.  
 
 #License
 
