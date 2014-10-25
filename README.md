@@ -17,6 +17,16 @@ An encrypted pastebin written in python using flask.
 - W3C compliant
 - Built-in webserver
 
+#Screenshots
+
+![Screenshot #1](http://i.imgur.com/B8hR5Ag.png)
+
+![Screenshot #2](http://i.imgur.com/aSSscvq.png)
+
+![Screenshot #3](http://i.imgur.com/qBYXiju.png)
+
+![Screenshot #4](http://i.imgur.com/coga21F.png)
+
 #Requirements
 
 - python 3.4.2
