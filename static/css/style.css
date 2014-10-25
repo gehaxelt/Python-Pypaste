@@ -9,3 +9,8 @@ body {
 .btn-bottom-margin {
   margin-bottom:5px !important;
 }
+
+.lightlabel {
+  display:inline;
+  font-weight:100
+}
