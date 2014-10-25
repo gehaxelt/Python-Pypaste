@@ -7,7 +7,6 @@ class PyPasteConfig:
     def __init__(self):
         self.__port = 5000                        #Port
         self.__host = "127.0.0.1"                 #Host
-        self.__baseURL = "http://{HOST}:{PORT}/"  #URL for paste links. {HOST} and {PORT} will be replaced
         self.__debug = False                      #Enable debug mode. Do *not* enable it in production environments
         self.__maxPasteSize = 1024*1024           #Maximum paste size in bytes (1024B * 1024B = 1MB)
         self.__maxLifeTime = 60 * 24              #Maximum lifetime of a paste in minutes (60m * 24h = 1440m)
@@ -18,9 +17,6 @@ class PyPasteConfig:
 
     def getHost(self):
         return self.__host
-
-    def getBaseURL(self):
-        return self.__baseURL
 
     def getDebug(self):
         return self.__debug
