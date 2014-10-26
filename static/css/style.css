@@ -1,5 +1,6 @@
-body {
+#pagecontent {
   padding: 50px;
+  margin-bottom: 10px;
 }
 
 #status, #showpaste {
@@ -13,4 +14,13 @@ body {
 .lightlabel {
   display:inline;
   font-weight:100
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 60px;
+  background-color: #f8f8f8;
+  padding-top: 20px;
 }

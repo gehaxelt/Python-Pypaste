@@ -18,59 +18,66 @@
     <![endif]-->
   </head>
   <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Welcome to PyPaste!</a>
+    <div id="pagecontent">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Welcome to PyPaste!</a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://github.com/gehaxelt/Python-Pypaste.git">Github</a></li>
+          </ul>
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div class="container">
+       <noscript>
+          <div class="alert alert-danger" role="alert">
+            You need to have Javascript enabled to use this pastebin properly.
+          </div>
+        </noscript>
+        <div class="row" id="status">
+          <div class="alert" role="alert" id="statusmessage"></div>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://github.com/gehaxelt/Python-Pypaste.git">Github</a></li>
-        </ul>
-      </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
-     <noscript>
-        <div class="alert alert-danger" role="alert">
-          You need to have Javascript enabled to use this pastebin properly.
+        <div class="row" id="content">
+          <div id="newpaste">
+            <form action="#" class="form-horizontal" role="form" id="formpaste">
+              <div class="row">
+                <button type="button" class="btn btn-default btn-bottom-margin" id="btnsend">Send</button>
+                <div class="btn btn-default btn-bottom-margin">
+                  <input type="checkbox" id="chkbburn"> <label class="lightlabel" for="chkbburn">Burn after reading</label>
+                </div>
+                <div class="btn btn-default btn-bottom-margin">
+                  <label class="lightlabel" for="selexpiration">Expire</label>
+                  <select id="selexpiration">
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="720">12 hours</option>
+                    <option value="1440" selected="selected">1 day</option>
+                  </select>
+                </div>
+                <button type="button" class="btn btn-default btn-bottom-margin" id="btnreset">Reset</button>
+              </div>
+              <div class="row">
+                <textarea class="form-control" rows="10" id="txtcode" placeholder="Your code here!"></textarea>
+              </div>
+            </form>
+          </div>
+          <div id="showpaste">
+            <div class="row">
+              <button type="button" class="btn btn-default btn-bottom-margin" id="btnnew">New</button>
+              <button type="button" class="btn btn-default btn-bottom-margin" id="btnsyntaxhighlight">Syntaxhighlighting</button>
+            </div>
+            <div class="row">  
+              <pre><code id="codepaste"></code></pre>
+            </div>
+          </div>
         </div>
-      </noscript>
-      <div class="row" id="status">
-        <div class="alert" role="alert" id="statusmessage"></div>
       </div>
-      <div class="row" id="content">
-        <div id="newpaste">
-          <form action="#" class="form-horizontal" role="form" id="formpaste">
-            <div class="row">
-              <button type="button" class="btn btn-default btn-bottom-margin" id="btnsend">Send</button>
-              <div class="btn btn-default btn-bottom-margin">
-                <input type="checkbox" id="chkbburn"> <label class="lightlabel" for="chkbburn">Burn after reading</label>
-              </div>
-              <div class="btn btn-default btn-bottom-margin">
-                <label class="lightlabel" for="selexpiration">Expire</label>
-                <select id="selexpiration">
-                  <option value="5">5 minutes</option>
-                  <option value="10">10 minutes</option>
-                  <option value="60">1 hour</option>
-                  <option value="720">12 hours</option>
-                  <option value="1440" selected="selected">1 day</option>
-                </select>
-              </div>
-              <button type="button" class="btn btn-default btn-bottom-margin" id="btnreset">Reset</button>
-            </div>
-            <div class="row">
-              <textarea class="form-control" rows="10" id="txtcode" placeholder="Your code here!"></textarea>
-            </div>
-          </form>
-        </div>
-        <div id="showpaste">
-          <div class="row">
-            <button type="button" class="btn btn-default btn-bottom-margin" id="btnnew">New</button>
-            <button type="button" class="btn btn-default btn-bottom-margin" id="btnsyntaxhighlight">Syntaxhighlighting</button>
-          </div>
-          <div class="row">  
-            <pre><code id="codepaste"></code></pre>
-          </div>
-        </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        <p class="text-muted">Developed by <a href="//twitter.com/gehaxelt">@gehaxelt</a> during <a href="//hacktoberfest.digitalocean.com">Hacktoberfest.</a></p>
       </div>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
