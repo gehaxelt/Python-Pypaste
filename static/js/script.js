@@ -24,12 +24,16 @@ $(document).ready(function() {
     $(filereader).on('load',function(event) {
       var data = event.target.result;
       var mimetype =  data.slice(data.indexOf('data:') + 5, data.indexOf(';base64,'));
-      console.log(data);
-      console.log(mimetype);
 
       if(!mimetype.match(/image/)) {
         showStatus("That's not an image!",'danger');
         return;
+      }
+
+      //Limit data-uri length to 2mb to prevent an odd bug in chromium 
+      if(data.length >= 2*1024*1024) {
+        showStatus('Image too big','danger');
+        return ;
       }
 
       imgpreview.prop('src', data);
