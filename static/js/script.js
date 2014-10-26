@@ -146,6 +146,14 @@ $(document).ready(function() {
         }
 
         codepaste.text(decrypted);
+
+        var divburnhint = $("#divburnedhint");
+        //Do we need to display a burn-after-reading hint?
+        if(msg.burn) {
+          divburnhint.css('display','inline-block');
+        } else {
+          divburnhint.css('display','none');
+        }
     })
       .fail(function(msg) {
         showStatus('Failed to retrieve the paste from the server :(','danger');

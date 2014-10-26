@@ -3,12 +3,16 @@
   margin-bottom: 10px;
 }
 
-#status, #showpaste {
+#status, #showpaste, #divburnedhint {
   display: none;
 }
 
 .btn-bottom-margin {
   margin-bottom:5px !important;
+}
+
+.btn-bottom-margin.alert {
+  padding: 6px;
 }
 
 .lightlabel {

@@ -95,7 +95,7 @@ def retrievePaste():
     if pasteburn:
         os.remove(pastepath)
 
-    return jsonify({'error':None,'data':pastedata}), 200
+    return jsonify({'error':None,'data':pastedata, 'burn': pasteburn}), 200
 
 if __name__ == '__main__':
     app.run(host = config.getHost(),
