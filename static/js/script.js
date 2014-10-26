@@ -11,10 +11,44 @@ $(document).ready(function() {
   var newpastediv = $("#newpaste");
   var checkburn = $("#chkbburn");
   var selexpiration = $("#selexpiration")
+  var filepaste = $("#filepaste");
+  var imgpreview = $("#imgPreview");
 
+  filepaste.on('change', function() {
+    var filereader = new FileReader();
+    
+    console.log(filepaste);
+
+    filereader.readAsDataURL(filepaste.prop('files')[0]);
+
+    $(filereader).on('load',function(event) {
+      var data = event.target.result;
+      var mimetype =  data.slice(data.indexOf('data:') + 5, data.indexOf(';base64,'));
+      console.log(data);
+      console.log(mimetype);
+
+      if(!mimetype.match(/image/)) {
+        showStatus("That's not an image!",'danger');
+        return;
+      }
+
+      imgpreview.prop('src', data);
+      imgpreview.prop('data-uri',data);
+      imgpreview.fadeIn('slow');
+      txtcode.hide();
+    });
+  });
 
   btnreset.on('click', function() {
     txtcode.val("");
+    txtcode.show();
+    
+    imgpreview.hide();
+    imgpreview.prop('src','');
+
+    filepaste.wrap('<form>').closest('form').get(0).reset();
+    filepaste.unwrap();
+
     btnsend.prop( "disabled", false );
     statusdiv.css("display","none");
   });
@@ -31,10 +65,17 @@ $(document).ready(function() {
   });
 
   btnsend.on('click', function() {
-    var plaintext = txtcode.val();
+    var textcontent = txtcode.val();
+    var imgcontent = imgpreview.prop('data-uri');
     var burnafterreading = checkburn.is(':checked');
     var expiration = selexpiration.val();
     btnsend.prop( "disabled", true );
+
+    if(imgcontent != "") {
+      var plaintext = imgcontent; 
+    } else {
+      var plaintext = textcontent;
+    }
 
     if(plaintext == "") {
       showStatus('No code to paste :(','danger');
@@ -154,7 +195,16 @@ $(document).ready(function() {
           return ;
         }
 
-        codepaste.text(decrypted);
+        if(decrypted.match(/^data:image/)) {
+          var showimage = $("#showimage");
+          showimage.prop('src',decrypted);
+          showimage.show();
+          codepaste.parent().hide();
+          $("#btnsyntaxhighlight").hide();
+        } else {
+          codepaste.text(decrypted);
+        }
+
 
         var divburnhint = $("#divburnedhint");
         //Do we need to display a burn-after-reading hint?

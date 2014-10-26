@@ -1,9 +1,9 @@
 #pagecontent {
   padding: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-#status, #showpaste, #divburnedhint {
+#status, #showpaste, #divburnedhint, #imgPreview, #showimage {
   display: none;
 }
 
@@ -25,6 +25,7 @@
   bottom: 0px;
   width: 100%;
   height: 60px;
+  border-top: 1px solid #e7e7e7;
   background-color: #f8f8f8;
   padding-top: 20px;
 }

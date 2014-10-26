@@ -56,10 +56,14 @@
                     <option value="1440" selected="selected">1 day</option>
                   </select>
                 </div>
+                <div class="btn btn-default btn-bottom-margin">
+                  <input type="file" id="filepaste" name="files[]">
+                </div>
                 <button type="button" class="btn btn-default btn-bottom-margin" id="btnreset">Reset</button>
               </div>
               <div class="row">
                 <textarea class="form-control" rows="10" id="txtcode" placeholder="Your code here!"></textarea>
+                <img src="" id="imgPreview">
               </div>
             </form>
           </div>
@@ -71,6 +75,7 @@
             </div>
             <div class="row">  
               <pre><code id="codepaste"></code></pre>
+              <img src="" id="showimage">
             </div>
           </div>
         </div>
