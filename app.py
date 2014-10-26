@@ -101,12 +101,14 @@ def getPastecount():
     return jsonify({'count': pastecount}), 200
 
 def initPastecount():
+    countfile.seek(0)
     count = countfile.readline().strip()
     if count != "":
         pastecount = int(count)
     else:
         pastecount = 0
     return pastecount
+
 def increasePastecount():
     global pastecount
     pastecount = pastecount + 1
@@ -115,7 +117,10 @@ def increasePastecount():
     countfile.flush()
 
 hex_regex = re.compile('^[a-zA-Z0-9]+$')
-countfile = open(os.path.join('data','pastecount.txt'),'a+');
+if(os.path.exists(os.path.join('data','pastecount.txt'))):
+    countfile = open(os.path.join('data','pastecount.txt'),'r+')
+else:
+    countfile = open(os.path.join('data','pastecount.txt'),'w+')
 pastecount = initPastecount()
 
 if __name__ == '__main__':
