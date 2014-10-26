@@ -49,6 +49,7 @@ $(document).ready(function() {
     
     imgpreview.hide();
     imgpreview.prop('src','');
+    imgpreview.prop('data-uri','');
 
     filepaste.wrap('<form>').closest('form').get(0).reset();
     filepaste.unwrap();
@@ -75,7 +76,7 @@ $(document).ready(function() {
     var expiration = selexpiration.val();
     btnsend.prop( "disabled", true );
 
-    if(imgcontent != "") {
+    if(imgcontent != null && imgcontent != "") {
       var plaintext = imgcontent; 
     } else {
       var plaintext = textcontent;
@@ -182,6 +183,8 @@ $(document).ready(function() {
       }
     })
       .done(function(msg) {
+
+
         if(msg.error != null) {
           showStatus(msg.error, 'danger');
           return ;
@@ -198,7 +201,7 @@ $(document).ready(function() {
           showStatus('An error occurred during the decryption process', 'danger');
           return ;
         }
-
+        
         if(decrypted.match(/^data:image/)) {
           var showimage = $("#showimage");
           showimage.prop('src',decrypted);
@@ -224,6 +227,14 @@ $(document).ready(function() {
     })
   }
 
+  var pastecount = $("#pastecount");
+  $.ajax('/api/getpastecount')
+    .done( function(msg) {
+      pastecount.text(msg.count);
+    })
+    .fail( function(msg) {
+      pastecount.text(0);
+    });
 });
 
 /**

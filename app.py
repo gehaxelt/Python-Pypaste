@@ -8,8 +8,6 @@ import re, time, hashlib, os
 config = PyPasteConfig()
 app = Flask(__name__)
 
-hex_regex = re.compile('^[a-zA-Z0-9]+$')
-
 # Send index.html
 @app.route('/')
 def index():
@@ -55,6 +53,7 @@ def createPaste():
     pastefile.write(data + "\n")
     pastefile.close()
 
+    increasePastecount()
     return jsonify({'error': None, 'hash': pastehash}), 200
 
 @app.route('/api/retrievepaste', methods=['POST'])
@@ -96,6 +95,28 @@ def retrievePaste():
         os.remove(pastepath)
 
     return jsonify({'error':None,'data':pastedata, 'burn': pasteburn}), 200
+
+@app.route('/api/getpastecount', methods=['GET'])
+def getPastecount():
+    return jsonify({'count': pastecount}), 200
+
+def initPastecount():
+    count = countfile.readline().strip()
+    if count != "":
+        pastecount = int(count)
+    else:
+        pastecount = 0
+    return pastecount
+def increasePastecount():
+    global pastecount
+    pastecount = pastecount + 1
+    countfile.seek(0)
+    countfile.write(str(pastecount) + "\n")
+    countfile.flush()
+
+hex_regex = re.compile('^[a-zA-Z0-9]+$')
+countfile = open(os.path.join('data','pastecount.txt'),'a+');
+pastecount = initPastecount()
 
 if __name__ == '__main__':
     app.run(host = config.getHost(),
