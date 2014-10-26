@@ -34,11 +34,15 @@ $(document).ready(function() {
     var plaintext = txtcode.val();
     var burnafterreading = checkburn.is(':checked');
     var expiration = selexpiration.val();
+    btnsend.prop( "disabled", true );
 
     if(plaintext == "") {
       showStatus('No code to paste :(','danger');
+      resetSendButton()
       return ;
     }
+
+    btnsend.text("Encrypting...");
 
     // generate a random key and IV for AES-256
     var key = forge.random.getBytesSync(32);
@@ -49,10 +53,12 @@ $(document).ready(function() {
 
     if(encrypted == null) {
       showStatus('An error occurred during encryption', 'danger');
+      resetSendButton();
       return ;
     }
 
-    btnsend.prop( "disabled", true );
+    btnsend.text( "Sending..." );
+
     //Send data to server
     $.ajax({
       type: "POST",
@@ -67,11 +73,13 @@ $(document).ready(function() {
 
         if(msg.error != null) {
           showStatus(msg.error, 'danger');
+          resetSendButton();
           return ;
         }
 
         if(typeof msg.hash === undefined ) {
           showStatus('Failed to get paste hash', 'danger');
+          resetSendButton();
           return ;
         }
 
@@ -91,10 +99,11 @@ $(document).ready(function() {
         });
 
         $("#pasteurl").select();
-        btnsend.prop( "disabled", false );
+        resetSendButton();
     })
       .fail(function( msg ) {
         showStatus('Unable to save the paste :(', 'danger');
+        resetSendButton();
         return ;
     });
   });
@@ -162,6 +171,15 @@ $(document).ready(function() {
   }
 
 });
+
+/**
+  * resets the $("#btnsend") to the default state (text: Sending, disabled: false)
+**/
+function resetSendButton() {
+  var btnsend = $("#btnsend");
+  btnsend.prop( "disabled", false );
+  btnsend.text("Send");
+}
 
 /**
   * Encrypts data with AES-CBC. Strength depends on the key, iv size.
